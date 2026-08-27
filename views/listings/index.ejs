@@ -1,139 +1,172 @@
-<% layout("./layouts/boilerplate.ejs")%>
+﻿<% layout("./layouts/boilerplate.ejs") %>
 
-  <style>
-    #filters {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+<div class="homepage-wrapper">
+  <section class="hero-section">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">EXPLORE THE WORLD</p>
+      <h1 class="hero-title">Find a place worth staying for.</h1>
+      <p class="hero-subtitle">Discover unique stays, beautiful destinations, and places made for your next getaway.</p>
 
-    .filter{
-      text-align: center;
-      margin-right: 2rem;
-      margin-top: 2rem;
-      opacity: 0.7;
-    }
+      <form action="/listings/search" method="GET" class="hero-search" role="search">
+        <label class="visually-hidden" for="hero-search-input">Search destinations</label>
+        <div class="hero-search-field">
+          <span class="hero-search-icon"><i class="fa-solid fa-location-dot"></i></span>
+          <input id="hero-search-input" name="q" type="search" class="form-control hero-search-input" placeholder="Search destinations" aria-label="Search destinations" />
+          <button class="btn btn-hero-search" type="submit" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </form>
+    </div>
 
-    .filter:hover{    
-      opacity: 1;
-    }
+    <div class="hero-image-panel">
+      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" alt="Scenic travel destination" loading="lazy" />
+      <div class="hero-image-fade"></div>
+    </div>
+  </section>
 
-   .filter p{
-    font-size: 0.8rem;
-   }
-
-   .tax-info{
-    display: none;
-   }
-
-   .tax-toggle{
-    border: 0.5px solid black;
-    border-radius: 1rem;
-    height: 3.25rem;
-    padding: 1rem;
-    margin-left: 2rem;
-    display: flex;
-    align-items: center;
-   }
-  </style>
-
-    <div id="filters">
-      <div class="filter">
-        <div><i class="fa-solid fa-fire"></i></div>
-       <p>Trending</p>
+  <section class="categories-section">
+    <div class="categories-scroll" id="category-scroller">
+      <div class="category-pill active" role="button" tabindex="0">
+        <i class="fa-solid fa-fire"></i>
+        <span>Trending</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></div>
-       <p>Rooms</p>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-bed"></i>
+        <span>Rooms</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
-       <p>Iconic Cities</p>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-city"></i>
+        <span>Iconic Cities</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-mountain"></i></div>
-       <p>Mountains</p>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-mountain"></i>
+        <span>Mountains</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-brands fa-fort-awesome"></i></div>
-       <p>Castles</p>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-fort-awesome"></i>
+        <span>Castles</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
-       <p>Amazing Pools</p>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-person-swimming"></i>
+        <span>Amazing Pools</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-campground"></i></div>
-       <p>Camping</p>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-campground"></i>
+        <span>Camping</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-cow"></i></div>
-       <p>Farms</p>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-cow"></i>
+        <span>Farms</span>
       </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-snowflake"></i></div>
-       <p>Arctic</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-cow"></i></div>
-       <p>Farms</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-snowflake"></i></div>
-       <p>Arctic</p>
-      </div>
-      <div class="tax-toggle">
-        <div class="form-check form-switch form-check-reverse">
-        <input 
-        class="form-check-input" 
-        type="checkbox" 
-        role="switch"
-        id="flexSwitchCheckDefault"
-        >
-        <label class="form-check-label" for="switchCheckReverse">Display total after taxes</label>
-      </div>
+      <div class="category-pill" role="button" tabindex="0">
+        <i class="fa-solid fa-snowflake"></i>
+        <span>Arctic</span>
       </div>
     </div>
 
+    <div class="tax-toggle">
+      <div class="form-check form-switch align-items-center">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+      </div>
+    </div>
+  </section>
 
-    <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
-      <%for(let listing of allListings) { %>
-    <a href="/listings/<%= listing._id%>" class="listing-link">
-<div class="card col listing-card" >
-<img
-  src="<%- listing.image.url %>"
-  class="card-img-top" alt="listing_image" style="height: 20rem;" >
+  <section class="explore-section">
+    <div class="section-heading">
+      <div>
+        <p class="section-eyebrow">Explore stays ✨</p>
+        <h2>Handpicked places for your next adventure.</h2>
+      </div>
+      <div class="sort-panel">
+        <span class="sort-label">Sort by</span>
+        <div class="sort-pill">Popular <i class="fa-solid fa-chevron-down"></i></div>
+      </div>
+    </div>
 
-  <!-- Card-img overlay -->
- <div class="card-img-overlay">hello</div>
+    <div class="listing-cards-grid">
+      <% if (allListings.length === 0) { %>
+        <div class="empty-state">No stays found for your search.</div>
+      <% } else { %>
+        <% allListings.forEach((listing) => { %>
+          <% const reviewCount = listing.reviews ? listing.reviews.length : 0; %>
+          <% const isPopular = reviewCount >= 4; %>
+          <a href="/listings/<%= listing._id %>" class="listing-card-link">
+            <article class="listing-card">
+              <div class="listing-image-wrapper">
+                <img src="<%- listing.image.url %>" alt="<%- listing.title %>" class="listing-img" />
+                <button class="favorite-button" type="button" aria-label="Save listing"><i class="fa-regular fa-heart"></i></button>
+                <% if (isPopular) { %>
+                  <span class="card-badge">Popular</span>
+                <% } %>
+              </div>
 
+              <div class="listing-card-body">
+                <div class="card-text">
+                  <h3 class="card-title"><%= listing.title %></h3>
+                  <p class="card-location"><i class="fa-solid fa-location-dot"></i> <%= listing.location %><% if (listing.country) { %>, <%= listing.country %><% } %></p>
+                </div>
+                <div class="card-meta">
+                  <p class="card-price">₹<%= listing.price %><span class="price-unit"> / night</span></p>
+                  <% if (reviewCount > 0) { %>
+                    <p class="card-rating"><i class="fa-solid fa-star"></i> <%= reviewCount %> reviews</p>
+                  <% } %>
+                </div>
+              </div>
+            </article>
+          </a>
+        <% }); %>
+      <% } %>
+    </div>
+  </section>
 
-  <div class="card-body">
-    <p class="card-text"><b><%=listing.title%></b> <br />
-    ₹ <%=listing.price%> / night
-    <i class="tax-info"> &nbsp; &nbsp; +18% GST</i></p>
-  </div>
+  <section class="trust-section">
+    <div class="trust-grid">
+      <article class="trust-card">
+        <div class="trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <h4>Trusted & Safe</h4>
+          <p>Verified stays and secure bookings.</p>
+        </div>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon"><i class="fa-solid fa-tags"></i></div>
+        <div>
+          <h4>Best Price Guarantee</h4>
+          <p>Find a lower price? We'll match it.</p>
+        </div>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon"><i class="fa-solid fa-headset"></i></div>
+        <div>
+          <h4>24/7 Support</h4>
+          <p>We're here to help you anytime.</p>
+        </div>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+        <div>
+          <h4>Explore More</h4>
+          <p>Unique stays in 1000+ destinations.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <h3>About Wanderlust</h3>
+    <p>Wanderlust is a clean travel discovery experience designed to help you search, browse, and choose your next stay with confidence.</p>
+  </section>
 </div>
-</a>
-<%}%> </div>
 
-
-  <script>
-  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+<script>
+  const taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  const taxInfoElements = document.getElementsByClassName("tax-info");
 
   taxSwitch.addEventListener("change", () => {
-    let taxInfo = document.getElementsByClassName("tax-info");
-
-    for (let info of taxInfo) {
-      if (taxSwitch.checked) {
-        info.style.display = "inline";
-      } else {
-        info.style.display = "none";
-      }
+    for (let i = 0; i < taxInfoElements.length; i++) {
+      taxInfoElements[i].style.display = taxSwitch.checked ? "block" : "none";
     }
   });
-</script> 
-
-
-
-
+</script>

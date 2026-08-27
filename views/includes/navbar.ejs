@@ -1,79 +1,58 @@
-<style>
-  .search-btn{
-    background-color: #fe424d;
-    color: #fff;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-  }
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/listings">
+      <span class="navbar-logo"><i class="fa-solid fa-location-dot"></i></span>
+      <span>Wanderlust</span>
+    </a>
 
-  .search-btn:hover {
-    background-color: #fe424d;
-    color: #fff;
-  }
-
-  .search-btn i {
-    display: inline;
-    margin-right: 0.5rem;
-  }
-
-  .search-inp{
-    border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    font-size: 1rem;
-  }
-
-</style>
-
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <!-- Left Side Elements -->
-       <div>
-        <ul class="navbar-nav">
+      <ul class="navbar-nav align-items-center gap-3 me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link ms-4" href="/listings">Explore</a>
+          <a class="nav-link active explore-link" aria-current="page" href="/listings">Explore</a>
         </li>
       </ul>
-       </div>
-      
-        <div class="navbar-nav ms-auto ">
-          <form class="d-flex" role="search">
-          <input class="form-control me-2 search-inp" 
-          type="search" 
-          placeholder="Search destinations" 
-          />
-          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-          </form>
+
+      <form action="/listings/search" method="GET" class="navbar-search d-flex mx-auto my-3 my-lg-0" role="search">
+        <div class="input-group search-pill">
+          <span class="input-group-text search-icon" id="navbar-search-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input name="q" class="form-control search-input" type="search" placeholder="Search destinations"
+            aria-label="Search destinations" aria-describedby="navbar-search-icon" />
+          <button class="btn btn-search-icon" type="submit" aria-label="Search">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
         </div>
+      </form>
 
-
-        <!-- Right Side Elements -->
-         
-          <ul class="navbar-nav ms-auto">
-           <li class="nav-item">
-          <a class="nav-link" href="/listings/new">AbodU</a>
-        </li>
-          <% if(!currUser){ %>
-            <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/signup"><b>Signup</b></a>
+      <ul class="navbar-nav align-items-center ms-auto gap-2">
+        <li class="nav-item">
+          <a class="nav-link text-muted" href="#about">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login"><b>Log in</b></a>
+          <a class="btn btn-accent rounded-pill px-4 py-2" href="/listings/new">
+            <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Listing
+          </a>
         </li>
-         <% } %>
-        
-         <% if(currUser){ %>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout"><b>Log out</b></a>
-        </li>
-        <% } %>
+        <% if (!currUser) { %>
+          <li class="nav-item">
+            <a class="btn btn-outline-secondary rounded-pill px-4 py-2" href="/signup">Signup</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-accent rounded-pill px-4 py-2" href="/login">Login</a>
+          </li>
+          <% } %>
+            <% if (currUser) { %>
+              <li class="nav-item">
+                <a class="btn btn-outline-secondary rounded-pill px-4 py-2" href="/logout">Logout</a>
+              </li>
+              <% } %>
       </ul>
-         
-        
     </div>
   </div>
 </nav>
